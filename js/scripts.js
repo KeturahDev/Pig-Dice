@@ -64,10 +64,11 @@ function turn(game, player1, player2) {
   player.diceRoll = rollDice; //and setting it to the current players diceroll property
   if (player.diceRoll !== 1) {           
   player.turnScore += rollDice;      ///assaigns the score
+  } else if (rollDice === 1) {
+    switchTurns(game,player1, player2);
+    player.turnScore = 0;
   }
-  // } else if (rollDice === 1) {
-    // switchTurns(game);
-  }
+}
 // front-end // ------------------------------------------------------------------------------------
 
 
