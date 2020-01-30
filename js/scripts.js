@@ -26,6 +26,7 @@ Game.prototype.addGoalScore = function(goalScore) {
 
 function Player() {
   this.name = ""; 
+  this.diceRoll = 0;
   this.score = 0;
   this.turnScore = 0;
 }
@@ -49,6 +50,7 @@ function diceRoll() {
   var rolling = getRandomInt(dice.length);
   // array accessor //
   var rolledNumber = dice[rolling]
+  console.log('rolledNumber', rolledNumber)
   return rolledNumber;
 }
 // where we implement this function, declare vr turnScore value of 0
@@ -58,8 +60,9 @@ function turn(game, player1, player2) {
   } else {
     var player = player2;
   }
-  var rollDice = diceRoll()
-  if (rollDice !== 1) {           
+  var rollDice = diceRoll() //calling the function that retreives dices value, 
+  player.diceRoll = rollDice; //and setting it to the current players diceroll property
+  if (player.diceRoll !== 1) {           
   player.turnScore += rollDice;      ///assaigns the score
   }
   // } else if (rollDice === 1) {
@@ -72,7 +75,17 @@ function turn(game, player1, player2) {
 //   $('#output').append("<p class='head'>Rolling for: " + playerName +  "</p>")
 // }
 
-
+function turnDecider(game,player1, player2) {
+  if (game.currentPlayer === 1) {  //checks which player is going to receive the score
+    var player = player1;
+    // player.diceRoll = diceRoll();
+    console.log('isplayer1')
+  } else {
+    var player = player2;
+    console.log('isplayer2')
+  }
+  return player;
+}
 
 function switchTurns(game, player1, player2) {
   game.switchPlayer(game.currentPlayer) 
@@ -127,14 +140,18 @@ $(document).ready(function() {
   
   $('#roll').click(function() {
     // var roll = $("#roll");
-    var rolledNumber = diceRoll(); 
+    // var rolledNumber = diceRoll(); 
+    // player1.diceRoll = rolledNumber
     turn(game, player1, player2);
     console.log(player1)
     console.log(player2)
 
+    var player = turnDecider(game, player1, player2)
+    $('#turn-score').html(player.turnScore);
+
     $('#diced').remove();
     // must .append (rather than .text) so that not all text in output is replaced by the result //
-    $('#output').append("<p id='diced'>You rolled: " + rolledNumber +  "</p>")
+    $('#output').append("<p id='diced'>You rolled: " + player.diceRoll +  "</p>")
   })
 
   $('#pass').click(function() {
