@@ -13,7 +13,7 @@
 <body>
   <div class="container">
     <h1>Pig Dice</h1>
-    <form id="formy">
+    <form id="start-game">
       <div class="form-group">
         <label for="score-goal">Enter the Winning Score</label>
         <input type="text" id="score-goal"> 
@@ -36,15 +36,15 @@
       <br>
       <div id="output" class="card card-body bg-light">
         <p>Rolling For: <span id="head"></span></p>
-        
+        <div id="diced"></div>
       </div>
 
       <div class="form-group">
-        <button id="roll" class="btn-success" type="submit">Roll!</button>
+        <button id="roll" class="btn-success" type="button">Roll!</button>
       </div>
   
       <div id="pass" class="form-group">
-        <button id="pass" class="btn-warning" type="submit">Pass Turn!</button>
+        <button id="pass" class="btn-warning" type="button">Pass Turn!</button>
       </div>
     </div>
     
