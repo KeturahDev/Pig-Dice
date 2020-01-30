@@ -27,6 +27,7 @@ Game.prototype.addGoalScore = function(goalScore) {
 function Player() {
   this.name = ""; 
   this.score = 0;
+  this.turnScore = 0;
 }
 // proto. for player constructor //
 Player.prototype.addName = function(name) {
@@ -51,10 +52,19 @@ function diceRoll() {
   return rolledNumber;
 }
 // where we implement this function, declare vr turnScore value of 0
-function turn(rolledNumber) {
-  var turnScore = 
-  turnscore += rolledNumber
-}
+function turn(game, player1, player2) {
+  if (game.currentPlayer === 1) {  //checks which player is going to receive the score
+    var player = player1;
+  } else {
+    var player = player2;
+  }
+  var rollDice = diceRoll()
+  if (rollDice !== 1) {           
+  player.turnScore += rollDice;      ///assaigns the score
+  }
+  // } else if (rollDice === 1) {
+    // switchTurns(game);
+  }
 // front-end // ------------------------------------------------------------------------------------
 
 
@@ -118,6 +128,10 @@ $(document).ready(function() {
   $('#roll').click(function() {
     // var roll = $("#roll");
     var rolledNumber = diceRoll(); 
+    turn(game, player1, player2);
+    console.log(player1)
+    console.log(player2)
+
     $('#diced').remove();
     // must .append (rather than .text) so that not all text in output is replaced by the result //
     $('#output').append("<p id='diced'>You rolled: " + rolledNumber +  "</p>")
