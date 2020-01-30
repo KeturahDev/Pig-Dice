@@ -19,12 +19,11 @@ function diceRoll() {
   function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
   }
-  console.log('dice',dice);
+  
   // variable for providing the length of the array "rolling" //
   var rolling = getRandomInt(dice.length);
   // array accessor //
   var rolledNumber = dice[rolling]
-  console.log('rolled number', rolledNumber);
   return rolledNumber;
 }
 // var game = new Game()
@@ -56,12 +55,13 @@ function diceRoll() {
 
 
 function switchTurns() {
-  game.switchPlayer()
+  game.switchPlayer() 
   console.log('game',game)
   if (game.currentPlayer === 1) {
-    $('#output').append("<p class='head'>Rolling for: " + player1.name1 +  "</p>")
+    $('#head').append(player1.name)
+
   } else if (game.currentPlayer === 2) {
-    $('#output').append("<p class='head'>Rolling for: " + player2.name2 +  "</p>")
+    $('#head').append(player2.name)
   }
   //changing the name displayed in the output
   //current player holds value of 1
@@ -72,6 +72,7 @@ function switchTurns() {
 
 var game = new Game(0, 1);
 var currentPlayer = game.currentPlayer;
+console.log('')
 var player1 = new Player(name, 0); 
 var player2 = new Player(name, 0); 
 $(document).ready(function() {
@@ -79,38 +80,41 @@ $(document).ready(function() {
   
   $('form#formy').submit(function(event) {
     event.preventDefault();
-    var score = parseInt($("#score-goal").val());
+    var score = parseInt($("input#score-goal").val());
     // console.log("score",score);
     // console.log("game-score",game.goalScore);
     
     var name1 = $("#name1").val();
     var name2 = $("#name2").val();
-    player1.name = name1
-    player2.name = name2
+    player1.name = name1;
+    player2.name = name2;
+    game.goalScore = score;
+
     console.log('player1 name:',player1.name);
     console.log('player2 name:',player2.name);
     
-    $('#output').append("<p class='head'>Rolling for: " + player1.name +  "</p>")
+    $('#head').append(player1.name)
     
     $(".game").show();
     $("#formy").hide();
     
-    $("#scoreGoal").text("This is your goal!! Reach it! " + game.goalScore);
+    $("#scoreGoalOutput").text("Reach this score to win: " + game.goalScore);
   })
   
   $('#roll').click(function(event) {
     event.preventDefault();
-    var roll = $("#roll");
+    // var roll = $("#roll");
 
-    var rolledNumber = diceRoll(dice); 
+    var rolledNumber = diceRoll(); 
 
     $('#diced').remove();
+    // must .append (rather than .text) so that not all text in output is replaced by the result //
     $('#output').append("<p id='diced'>You rolled: " + rolledNumber +  "</p>")
   })
   $('#pass').click(function(event) {
     event.preventDefault();
     switchTurns(currentPlayer);
 
-    $('#output').text('pass worked!') 
+    // $('#output').text('pass worked!') 
   })
 })
