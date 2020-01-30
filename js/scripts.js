@@ -3,15 +3,23 @@ function Game(goalScore, currentPlayer) {
   this.goalScore = goalScore;
   this.currentPlayer = currentPlayer;
 }
-
+// proto. for Game constructor //
 Game.prototype.switchPlayer = function() {
   this.currentPlayer = this.currentPlayer == 1 ? 2 : 1;
   return currentPlayer;
 }
 
+Game.prototype.addGoalScore = function(goalScore) {
+  this.goalScore = goalScore;
+}
+
 function Player(name, score) {
   this.name = name; 
   this.score = score;
+}
+// proto. for player constructor //
+Player.prototype.addName = function(name) {
+  this.name = name;
 }
 
 function diceRoll() {
@@ -80,15 +88,17 @@ $(document).ready(function() {
   
   $('form#formy').submit(function(event) {
     event.preventDefault();
-    var score = parseInt($("input#score-goal").val());
+    var goalScore = parseInt($("input#score-goal").val());
     // console.log("score",score);
     // console.log("game-score",game.goalScore);
     
     var name1 = $("#name1").val();
     var name2 = $("#name2").val();
-    player1.name = name1;
-    player2.name = name2;
-    game.goalScore = score;
+    // accessing objects, not constructors. Hence capitalization differences //
+    player1.addName(name1);
+    player2.addName(name2);
+    game.addGoalScore(goalScore);
+    // game.goalScore = score;
 
     console.log('player1 name:',player1.name);
     console.log('player2 name:',player2.name);
