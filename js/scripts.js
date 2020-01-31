@@ -39,6 +39,14 @@ Player.prototype.addScore = function(score) {
   this.score = score;
 }
 
+Player.prototype.winner = function(player, game) {
+  if (player.score >= game.goalScore) {
+    alert ("YOU WIN");
+  } else {
+    null;
+  }
+}
+
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
@@ -65,8 +73,10 @@ function turn(game, player1, player2) {
   if (player.diceRoll !== 1) {           
   player.turnScore += rollDice;      ///assaigns the score
   } else if (rollDice === 1) {
+    clearOutputinTurn()
     switchTurns(game,player1, player2);
     player.turnScore = 0;
+
   }
 }
 
@@ -76,6 +86,8 @@ function passTurn(player1, player2, game) {
   player.turnScore = 0; 
   console.log('players turn score after passing',player.turnScore);
   switchTurns(game, player1, player2);
+  clearOutput();
+  player.winner(player, game);
 }
 // front-end // ------------------------------------------------------------------------------------
 
@@ -94,6 +106,15 @@ function turnDecider(game,player1, player2) {
     console.log('isplayer2')
   }
   return player;
+}
+
+function clearOutput() {
+  $('#turn-score').html('0')
+  // $('#total-score').html('0')
+  $('#diced').html('0')
+}
+function clearOutputinTurn() {
+  $('#diced').html('0')
 }
 
 function switchTurns(game, player1, player2) {
@@ -157,10 +178,8 @@ $(document).ready(function() {
 
     var player = turnDecider(game, player1, player2)
     $('#turn-score').html(player.turnScore);
-
-    $('#diced').remove();
     // must .append (rather than .text) so that not all text in output is replaced by the result //
-    $('#output').append("<p id='diced'>You rolled: " + player.diceRoll +  "</p>")
+    $('#diced').html(player.diceRoll)
   })
 
   $('#pass').click(function() {
