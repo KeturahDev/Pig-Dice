@@ -69,6 +69,12 @@ function turn(game, player1, player2) {
     player.turnScore = 0;
   }
 }
+
+function passTurn(player1, player2, game) {
+  var player = turnDecider(game, player1, player2);
+  player.score = player.score += player.turnScore;
+  switchTurns(game, player1, player2);
+}
 // front-end // ------------------------------------------------------------------------------------
 
 
@@ -156,8 +162,8 @@ $(document).ready(function() {
   })
 
   $('#pass').click(function() {
-    switchTurns(game,player1,player2);
-
+    // switchTurns(game,player1,player2);
+    passTurn(player1, player2, game);
     // $('#output').text('pass worked!') 
   })
 })
