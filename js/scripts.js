@@ -73,6 +73,8 @@ function turn(game, player1, player2) {
 function passTurn(player1, player2, game) {
   var player = turnDecider(game, player1, player2);
   player.score = player.score += player.turnScore;
+  player.turnScore = 0; 
+  console.log('players turn score after passing',player.turnScore);
   switchTurns(game, player1, player2);
 }
 // front-end // ------------------------------------------------------------------------------------
@@ -164,6 +166,8 @@ $(document).ready(function() {
   $('#pass').click(function() {
     // switchTurns(game,player1,player2);
     passTurn(player1, player2, game);
+    var player = turnDecider(game, player1, player2)
+    $('#total-score').html(player.score);
     // $('#output').text('pass worked!') 
   })
 })
